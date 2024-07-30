@@ -13,7 +13,7 @@ For the documentation, I refer you to Docu-Projet03.docx in themain branch.
 
 ## Connexion à la base de données
 
-- Se connecte à une base de données MongoDB via une URI (non fournie dans le code pour des raisons de sécurité)
+- Se connecte à une base de données MongoDB via une URL
 - Utilise Mongoose pour la modélisation des données
 
 ## Modèle de données
