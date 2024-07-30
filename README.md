@@ -1,8 +1,7 @@
 ###Project Back-end Ebook :   
 For the documentation, I refer you to Docu-Projet03.docx in themain branch.
-# Backend API pour la gestion des livres
+# Backend pour la gestion des livres
 
-Ce code crée un serveur backend utilisant Node.js, Express et MongoDB pour gérer une collection de livres.
 
 ## Configuration
 
