@@ -1,12 +1,10 @@
-###Project Back-end Ebook :   
-For the documentation, I refer you to Docu-Projet03.docx in themain branch.
 # Backend pour la gestion des livres
 
 
 ## Configuration
 
 - Le serveur utilise Express.js
-- Il écoute sur le port 5000
+- Il écoute sur le port 8000
 - Utilise MongoDB comme base de données
 - Utilise le middleware CORS pour permettre les requêtes cross-origin
 - Utilise express.json() pour parser les requêtes JSON
@@ -20,7 +18,10 @@ For the documentation, I refer you to Docu-Projet03.docx in themain branch.
 
 Le schéma de livre (Book) contient :
 - title : String
-- author : String
+- title: String,
+- description: String
+- image: String
+- imageDeleteToken: String
 
 ## Routes API
 
@@ -37,8 +38,23 @@ Le schéma de livre (Book) contient :
      - 400 : ID invalide
      - 404 : Livre non trouvé
      - 500 : Erreur serveur
+3. PUT /books/:id
+   - Ajouter un livre
+   - Paramètres :
+     - id : ID du livre à supprimer
+   - Réponses :
+     - 200 : Livre supprimé avec succès
+     - 400 : ID invalide
+     - 404 : Livre non trouvé
+     - 500 : Erreur serveur
+   
+   
 
 ## Gestion des erreurs
 
 - Capture et log les erreurs de connexion à MongoDB
 - Gère les erreurs pour chaque route avec des réponses HTTP appropriées
+
+
+### Project Back-end Ebook :   
+For the documentation, I refer you to Docu-Projet03.docx in themain branch.
