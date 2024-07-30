@@ -18,7 +18,6 @@
 
 Le schéma de livre (Book) contient :
 - title : String
-- title: String,
 - description: String
 - image: String
 - imageDeleteToken: String
