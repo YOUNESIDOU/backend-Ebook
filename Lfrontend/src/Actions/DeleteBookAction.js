@@ -1,5 +1,5 @@
 import Swal from "sweetalert2";
-import { deleteCloudinaryImage } from "../utils/Cloudinary";
+import axios from "axios";
 
 export async function DeleteBookAction(id, deleteToken) {
   const result = await Swal.fire({
@@ -13,18 +13,22 @@ export async function DeleteBookAction(id, deleteToken) {
   });
 
   if (result.isConfirmed) {
-    await deleteCloudinaryImage(deleteToken)
-    // Get existing books from local storage
-    let books = JSON.parse(localStorage.getItem("books")) || [];
+    try {
+      // Supprimez l'image de Cloudinary si nécessaire
+      // await deleteCloudinaryImage(deleteToken);
 
-    // Filter out the book with the given id
-    const updatedBooks = books.filter((book) => book.id !== id);
+      // Envoyer une requête DELETE à votre backend pour supprimer le livre
+      const response = await axios.delete(`http://localhost:8000/api/books/${id}`);
 
-    // Save the updated books array back to local storage
-    localStorage.setItem("books", JSON.stringify(updatedBooks));
-
-    Swal.fire("Deleted!", "Your book has been deleted.", "success").then(() => {
-      window.location.reload();
-    });
+      if (response.status === 200) {
+        Swal.fire("Deleted!", "Your book has been deleted.", "success").then(() => {
+          window.location.reload();
+        });
+      } else {
+        Swal.fire("Error!", "An error occurred while deleting the book.", "error");
+      }
+    } catch (error) {
+      Swal.fire("Error!", "An error occurred while deleting the book.", "error");
+    }
   }
 }

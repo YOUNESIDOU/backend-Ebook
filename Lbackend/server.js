@@ -4,6 +4,9 @@ const express = require("express");
 const cors = require("cors");
 const morgan = require("morgan");
 const bodyParser = require('body-parser');
+const multer = require('multer');
+
+
 
 
 const mongoose = require("mongoose");
@@ -15,6 +18,8 @@ mongoose
   .catch((error) => console.log(error));
 
 const app = express();
+const upload = multer();
+
 app.use(bodyParser.json());
 app.use(cors());
 app.use(express.json());
@@ -40,6 +45,7 @@ app.use((req, res, next) => {
 
   return next();
 });
+
 
 app.get("/test", (req, res) => {
   res.json({ message: "This is a test route for Team Younes" });
@@ -80,6 +86,81 @@ app.get('/api/books', async (req, res) => {
     res.status(500).send({ error: 'Error fetching books' });
   }
 });
+//________Delete 
+app.delete("/api/books/:id", async (req, res) => {
+  const { id } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({ message: "Invalid ID" });
+  }
+
+  const result = await Book.findByIdAndDelete({ _id: id });
+
+  if (!result) {
+    return res.status(404).json({ message: "Book not found" });
+  }
+  return res.status(200).json(result);
+});
+
+
+// //___________Update : 
+// app.patch("/api/books/:id", async (req, res) => {
+//   const { id } = req.params;
+//   if (!mongoose.Types.ObjectId.isValid(id)) {
+//     return res
+//       .status(404)
+//       .json({ error: "There is no such a thing in here go away" });
+//   }
+
+//   const ubook = await Book.findOneAndUpdate(
+//     { _id: id },
+//     {
+//       ...req.body,
+//     }
+//   );
+//   if (!ubook) {
+//     res.status(404).json({ error: "there is no such a thing" });
+//   }
+//   res.status(200).json(ubook);
+// });
+//__
+
+
+
+app.put("/api/books/:id", upload.single('image'), async (req, res) => {
+  const { id } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({ error: "Invalid book ID" });
+  }
+
+  const updateData = {
+    ...req.body,
+  };
+
+  if (req.file) {
+    updateData.image = req.file.buffer; // or process the file as needed
+  }
+
+  try {
+    const ubook = await Book.findOneAndUpdate(
+      { _id: id },
+      updateData,
+      { new: true }
+    );
+
+    if (!ubook) {
+      return res.status(404).json({ error: "Book not found" });
+    }
+
+    res.status(200).json(ubook);
+  } catch (error) {
+    res.status(500).json({ error: "An error occurred while updating the book" });
+  }
+});
+
+
+
+
 
 
 const port = process.env.port || 8000;
