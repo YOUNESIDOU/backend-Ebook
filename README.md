@@ -28,7 +28,17 @@ Le schéma de livre (Book) contient :
    - Récupère tous les livres de la base de données
    - Renvoie un tableau JSON de tous les livres
 
-2. DELETE /deleteBook/:id
+2. POST /books
+   - Créer un livre 
+   - Paramètres :
+     - BookSchema
+   - Réponses :
+     - 200 : Livre ajouté avec succès
+     - 400 : ID invalide
+     - 404 : Livre non trouvé
+     - 500 : Erreur serveur
+
+3. DELETE /deleteBook/:id
    - Supprime un livre spécifique par son ID
    - Paramètres :
      - id : ID du livre à supprimer
@@ -37,15 +47,17 @@ Le schéma de livre (Book) contient :
      - 400 : ID invalide
      - 404 : Livre non trouvé
      - 500 : Erreur serveur
-3. PUT /books/:id
-   - Ajouter un livre
+
+4. PUT /books/:id
+   - Modifier un livre spécifique par son ID
    - Paramètres :
-     - id : ID du livre à supprimer
+     - id : ID du livre à modifier
    - Réponses :
-     - 200 : Livre supprimé avec succès
+     - 200 : Livre modifié avec succès
      - 400 : ID invalide
      - 404 : Livre non trouvé
      - 500 : Erreur serveur
+   
    
    
 
